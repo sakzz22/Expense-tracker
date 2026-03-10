@@ -87,7 +87,10 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
         const config = {
           method,
           url: `${BASE_URL}${endpoint}`,
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         };
         if (data) config.data = data;
         const response = await axios(config);
@@ -116,6 +119,7 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
           setTempUser(userData);
         }
       } catch (err) {
+        console.log(err);
         toast.error("Failed to load user data");
       }
     };

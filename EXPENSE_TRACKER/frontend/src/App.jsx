@@ -265,6 +265,13 @@ import Expense from "./pages/Expense";
 import Profile from "./pages/Profile";
 
 const API_URL = "https://expense-tracker-2-81x3.onrender.com";
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 // to get transaction from localstorage
 const getTransactionsFromStorage = () => {
