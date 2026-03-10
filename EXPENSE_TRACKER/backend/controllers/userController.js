@@ -128,7 +128,7 @@ export async function getCurrentUser(req, res) {
 
     res.json({ success: true, user });
   } catch (error) {
-    console.error(err);
+    console.error(error);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -217,7 +217,7 @@ export async function updatePassword(req, res) {
       success: true,
       message: "Password changed",
     });
-  } catch (error) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false,
