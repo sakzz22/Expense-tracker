@@ -6,9 +6,12 @@ import userRouter from "./routes/userRoute.js";
 import incomeRouter from "./routes/incomeRoute.js";
 import expenseRouter from "./routes/expenseRoute.js";
 import dashboardRouter from "./routes/dashboardRoute.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 //Middlewares
 app.use(cors());
@@ -18,15 +21,14 @@ app.use(express.urlencoded({ extended: true }));
 //DB
 
 //Routes
-app.use("/api/user", userRouter)
-app.use("/api/income", incomeRouter)
-app.use("/api/expense", expenseRouter)
-app.use("/api/dashboard", dashboardRouter)
+app.use("/api/user", userRouter);
+app.use("/api/income", incomeRouter);
+app.use("/api/expense", expenseRouter);
+app.use("/api/dashboard", dashboardRouter);
 
-app.get("/", (req, res) => {
-  res.send("hello");
-});
+
+
 app.listen(port, () => {
   console.log(`listening ${port}`);
-  connectDB()
+  connectDB();
 });

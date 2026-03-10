@@ -3,7 +3,7 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "DSVDBJVJS";
+const JWT_SECRET = process.env.JWT_SECRET;
 const TOKEN_EXPIRES = "7d";
 
 const createToken = (userId) =>
