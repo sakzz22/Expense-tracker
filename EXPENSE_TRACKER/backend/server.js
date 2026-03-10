@@ -14,7 +14,13 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 //Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://expense-tracker-sakkzz.onrender.com"],
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,8 +31,6 @@ app.use("/api/user", userRouter);
 app.use("/api/income", incomeRouter);
 app.use("/api/expense", expenseRouter);
 app.use("/api/dashboard", dashboardRouter);
-
-
 
 app.listen(port, () => {
   console.log(`listening ${port}`);
