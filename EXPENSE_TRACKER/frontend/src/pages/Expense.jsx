@@ -32,18 +32,12 @@ import { expensePageStyles as styles } from "../assets/dummyStyles";
 
 const API_BASE = "https://expense-tracker-2-81x3.onrender.com/api";
 
-/**
- * Helper: convert date (or datetime) to ISO by attaching client current time
- * - If `dateValue` is "YYYY-MM-DD" (length 10) => attach current HH:MM:SS
- * - Otherwise attempt to parse and return ISO
- * - Fallback to now if parsing fails
- */
+
 function toIsoWithClientTime(dateValue) {
   if (!dateValue) {
     return new Date().toISOString();
   }
 
-  // Plain date YYYY-MM-DD
   if (typeof dateValue === "string" && dateValue.length === 10) {
     const now = new Date();
     const hhmmss = now.toTimeString().slice(0, 8); // "HH:MM:SS"
@@ -51,7 +45,7 @@ function toIsoWithClientTime(dateValue) {
     return combined.toISOString();
   }
 
-  // Already a datetime or ISO-like string
+
   try {
     return new Date(dateValue).toISOString();
   } catch (err) {
@@ -61,7 +55,7 @@ function toIsoWithClientTime(dateValue) {
 }
 
 const ExpensePage = () => {
-  // Get data from outlet context including refreshTransactions
+  
   const {
     transactions: outletTransactions = [],
     timeFrame = "monthly",
@@ -96,13 +90,12 @@ const ExpensePage = () => {
     range: "monthly",
   });
 
-  // Auth headers helper
+
   const getAuthHeaders = useCallback(() => {
     const token = localStorage.getItem("token");
     return token ? { Authorization: `Bearer ${token}` } : {};
   }, []);
 
-  // Fetch overview (GET /expense/overview?range=...)
   const fetchOverview = useCallback(
     async (range = timeFrame ?? "monthly") => {
       try {
@@ -125,18 +118,18 @@ const ExpensePage = () => {
     [timeFrame, getAuthHeaders],
   );
 
-  // Initial load
+  
   useEffect(() => {
     fetchOverview(timeFrame);
   }, [fetchOverview, timeFrame]);
 
-  // Re-fetch overview when timeframe changes
+
   useEffect(() => {
     if (filter === "month" && !timeFrame) setTimeFrame("monthly");
     fetchOverview(timeFrame);
   }, [timeFrame, selectedMonth, filter, setTimeFrame, fetchOverview]);
 
-  // Time frame range and chart points
+ 
   const timeFrameRange = useMemo(
     () => getTimeFrameRange(timeFrame, selectedMonth),
     [timeFrame, selectedMonth],
@@ -146,7 +139,7 @@ const ExpensePage = () => {
     [timeFrame, timeFrameRange],
   );
 
-  // Function to check if a date is within a range
+ 
   const isDateInRange = useCallback((date, start, end) => {
     const transactionDate = new Date(date);
     const startDate = new Date(start);
@@ -168,7 +161,7 @@ const ExpensePage = () => {
     [outletTransactions],
   );
 
-  // Filter transactions by time frame
+ 
   const timeFrameTransactions = useMemo(
     () =>
       expenseTransactions.filter((t) =>
@@ -177,7 +170,7 @@ const ExpensePage = () => {
     [expenseTransactions, timeFrameRange, isDateInRange],
   );
 
-  // Filter logic — month/year use current calendar by default
+ 
   const filteredTransactions = useMemo(() => {
     if (filter === "all") return timeFrameTransactions;
 
@@ -219,7 +212,7 @@ const ExpensePage = () => {
     });
   }, [timeFrameTransactions, filter, selectedMonth, timeFrameRange]);
 
-  // Calculate totals
+ 
   const totalExpense = useMemo(
     () =>
       filteredTransactions.reduce(
@@ -237,7 +230,7 @@ const ExpensePage = () => {
     [filteredTransactions, totalExpense],
   );
 
-  // Prepare chart data
+
   const chartData = useMemo(() => {
     const data = chartPoints.map((point) => ({ ...point, expense: 0 }));
 
@@ -257,7 +250,7 @@ const ExpensePage = () => {
     return data;
   }, [filteredTransactions, chartPoints, timeFrame]);
 
-  // API request handler
+
   const handleApiRequest = async (method, url, data = null) => {
     try {
       setLoading(true);
@@ -287,12 +280,12 @@ const ExpensePage = () => {
     }
   };
 
-  // Add expense -> POST /expense/add
+ 
   const handleAddTransaction = async () => {
     if (!newTransaction.description || !newTransaction.amount) return;
 
     try {
-      // Convert date-only to ISO with client time before sending
+     
       const payload = {
         description: newTransaction.description.trim(),
         amount: parseFloat(newTransaction.amount),
@@ -302,7 +295,6 @@ const ExpensePage = () => {
 
       await handleApiRequest("post", "/expense/add", payload);
 
-      // If added date is outside the current visible range, switch view to that month
       const addedDate = new Date(payload.date || newTransaction.date);
       const addedDateInRange =
         addedDate >= timeFrameRange.start && addedDate <= timeFrameRange.end;
@@ -324,11 +316,11 @@ const ExpensePage = () => {
       setShowModal(false);
     } catch (err) {
         console.log(err)
-      // Error handled in handleApiRequest
+   
     }
   };
 
-  // Edit expense -> PUT /expense/update/:id
+ 
   const handleEditTransaction = async () => {
     if (!editingId || !editForm.description || !editForm.amount) return;
 
@@ -344,18 +336,18 @@ const ExpensePage = () => {
       setEditingId(null);
     } catch (err) {
         console.log(err)
-      // Error handled in handleApiRequest
+
     }
   };
 
-  // Delete expense -> DELETE /expense/delete/:id
+ 
   const handleDeleteTransaction = async (id) => {
     if (!id || !window.confirm("Are you sure you want to delete this expense?"))
       return;
     await handleApiRequest("delete", `/expense/delete/${id}`);
   };
 
-  // Export -> GET /expense/downloadexcel (server) with client fallback
+  
   const handleExport = async () => {
     try {
       const res = await axios.get(`${API_BASE}/expense/downloadexcel`, {
@@ -382,7 +374,7 @@ const ExpensePage = () => {
       link.remove();
     } catch (err) {
       console.error("Export error:", err);
-      // Fallback client export
+ 
       try {
         const exportData = filteredTransactions.map((t) => ({
           Date: new Date(t.date).toLocaleDateString(),
@@ -697,5 +689,3 @@ const ExpensePage = () => {
 
 export default ExpensePage;
 
-//this is similar to the income page
-// similar functions just in place of income replace it with expense

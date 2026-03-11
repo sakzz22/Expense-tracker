@@ -76,7 +76,6 @@ const Navbar = ({ user: propUser, onLogout }) => {
           <span className={navbarStyles.logoText}>Expense Tracker</span>
         </div>
 
-        {/* if the user is present */}
         {user && (
           <div className={navbarStyles.userContainer} ref={menuRef}>
             <button onClick={toggleMenu} className={navbarStyles.userButton}>

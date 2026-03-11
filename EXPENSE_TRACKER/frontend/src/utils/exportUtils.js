@@ -8,11 +8,11 @@ export const exportToExcel = (data, fileName = "transactions") => {
 
     try {
         const worksheet = XLSX.utils.json_to_sheet(data);
-        // create a workbook
+       
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
 
-        // Generate a Excel file and trigger download
+       
         XLSX.writeFile(workbook, `${fileName}.xlsx`, {
             bookType: 'xlsx',
             type: 'array'

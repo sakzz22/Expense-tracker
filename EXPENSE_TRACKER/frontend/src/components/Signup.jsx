@@ -34,7 +34,7 @@ const Signup = ({ API_URL = "https://expense-tracker-2-81x3.onrender.com", onSig
     }
   };
 
-  // to validate that all fields are filled by user or not
+ 
   const validateForm = () => {
     const newErrors = {};
 
@@ -76,7 +76,7 @@ const Signup = ({ API_URL = "https://expense-tracker-2-81x3.onrender.com", onSig
       const token = data.token ?? null;
       let profile = data.user ?? null;
       if (!profile) {
-        // check for any extra fields returned that could be user info
+     
         const copy = { ...data };
         delete copy.token;
         delete copy.user;

@@ -107,7 +107,7 @@ const Dashboard = () => {
     [timeFrame],
   );
 
-  //function to check if a date is within the range
+
   const isDateInRange = (date, start, end) => {
     const transactionDate = new Date(date);
     const startDate = new Date(start);
@@ -119,7 +119,7 @@ const Dashboard = () => {
     return transactionDate >= startDate && transactionDate <= endDate;
   };
 
-  //to filter using date and time
+
   const filteredTransactions = useMemo(
     () =>
       (outletTransactions || []).filter((t) =>
@@ -136,7 +136,7 @@ const Dashboard = () => {
     [outletTransactions, prevTimeFrameRange],
   );
 
-  //calculate data
+
   const currentTimeFrameData = useMemo(() => {
     const data = calculateData(filteredTransactions);
     data.savings = data.income - data.expenses;
@@ -149,7 +149,7 @@ const Dashboard = () => {
     return data;
   }, [prevFilteredTransactions]);
 
-  //update the gauge when time frame changes
+ 
   useEffect(() => {
     const maxValues = {
       income: Math.max(currentTimeFrameData.income, 5000),
@@ -174,7 +174,7 @@ const Dashboard = () => {
         max: maxValues.savings,
       },
     ]);
-  }, [currentTimeFrameData, timeFrame]); //the graph will be fill according to this data.
+  }, [currentTimeFrameData, timeFrame]); 
 
   const displayIncome =
     timeFrame === "monthly" && typeof overviewMeta.monthlyIncome === "number"
@@ -191,7 +191,6 @@ const Dashboard = () => {
       ? overviewMeta.savings
       : currentTimeFrameData.savings;
 
-  //expense change percentage
   const expenseChange = useMemo(() => {
     const prev = prevTimeFrameData.expenses;
     const curr = displayExpenses;
@@ -202,7 +201,7 @@ const Dashboard = () => {
     return Math.round(((curr - prev) / prev) * 100);
   }, [prevTimeFrameData, displayExpenses]);
 
-  //expense distribution
+  
   const financialOverviewData = useMemo(() => {
     if (
       timeFrame === "monthly" &&
@@ -230,7 +229,7 @@ const Dashboard = () => {
     }));
   }, [filteredTransactions, overviewMeta, timeFrame]);
 
-  // build server-provided recent list
+  
   const serverRecent = overviewMeta.recentTransactions || [];
   const serverRecentIncome = serverRecent
     .filter((t) => t.type === "income")
@@ -367,7 +366,7 @@ const Dashboard = () => {
     fetchDashboardOverview();
   }, []);
 
-  // add/ edit or //delete
+  
   const handleAddTransaction = async () => {
     if (!newTransaction.description || !newTransaction.amount) return;
 
@@ -542,7 +541,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Expense distribution pie - Hidden on mobile */}
+    
       <div className={dashboardStyles.pieChartContainer}>
         <div className={dashboardStyles.pieChartHeader}>
           <h3 className={dashboardStyles.pieChartTitle}>
@@ -691,7 +690,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Expense Column */}
+    
         <div className={dashboardStyles.listContainer}>
           <div className={dashboardStyles.listHeader}>
             <h3 className="text-lg md:text-xl lg:text-xl xl:text-xl font-bold text-gray-800 md:mt-3 mt-3 flex items-center gap-3">

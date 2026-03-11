@@ -40,7 +40,7 @@ const CATEGORY_ICONS = {
   Savings: <PiggyBank className="w-4 h-4" />,
 };
 
-//to filter
+
 const filterTransactions = (transactions, frame) => {
   const now = new Date();
   const today = new Date(now).setHours(0, 0, 0, 0);
@@ -80,7 +80,7 @@ const Layout = ({ onLogout, user }) => {
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  //now we will fetch the transaction
+
   const fetchTransactions = async () => {
     try {
       setLoading(true);
@@ -522,7 +522,7 @@ const Layout = ({ onLogout, user }) => {
                   </div>
                 )}
 
-                {/* spending by category card */}
+            
                 <div className={styles.cards.base}>
                   <h3 className={styles.categories.title}>
                     <PieChart className={styles.categories.titleIcon} />

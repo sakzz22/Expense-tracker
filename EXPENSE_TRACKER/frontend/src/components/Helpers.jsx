@@ -20,17 +20,17 @@ export const getTimeFrameRange = (timeFrame) => {
     return { start: startOfMonth, end: new Date(now), label: "This Month" };
   }
 
-  // yearly
+
   if (timeFrame === "yearly") {
     const startOfYear = new Date(start.getFullYear(), 0, 1);
     startOfYear.setHours(0, 0, 0, 0);
     return { start: startOfYear, end: new Date(now), label: "This Year" };
   }
 
-  // default -> monthly
+
   const startOfMonth = new Date(start.getFullYear(), start.getMonth(), 1);
   return { start: startOfMonth, end: new Date(now), label: "This Month" };
-}; //to filter according to day, month, year
+}; 
 
 export const getPreviousTimeFrameRange = (timeFrame) => {
   const now = new Date();
@@ -97,7 +97,7 @@ export const getPreviousTimeFrameRange = (timeFrame) => {
     return { start: startOfLastYear, end: endOfLastYear, label: "Last Year" };
   }
 
-  // default -> last month
+  
   const startOfLastMonth = new Date(
     start.getFullYear(),
     start.getMonth() - 1,
@@ -131,7 +131,7 @@ export const generateChartPoints = (timeFrame) => {
   const points = [];
 
   if (timeFrame === "daily") {
-    // Generate 24 hours for daily view
+   
     for (let i = 0; i < 24; i++) {
       const hour = new Date(now);
       hour.setHours(i, 0, 0, 0);
@@ -143,7 +143,7 @@ export const generateChartPoints = (timeFrame) => {
       });
     }
   } else if (timeFrame === "weekly") {
-    // Generate 7 days for weekly view (Sunday -> Saturday)
+   
     const start = new Date(now);
     start.setDate(now.getDate() - now.getDay());
     start.setHours(0, 0, 0, 0);
@@ -184,7 +184,7 @@ export const generateChartPoints = (timeFrame) => {
       });
     }
   } else {
-    // fallback -> monthly
+    
     const start = new Date(now.getFullYear(), now.getMonth(), 1);
     const daysInMonth = new Date(
       now.getFullYear(),

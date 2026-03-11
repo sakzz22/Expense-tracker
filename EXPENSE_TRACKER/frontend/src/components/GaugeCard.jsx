@@ -16,11 +16,11 @@ const GaugeCard = ({
   const isNegative = value < 0;
   const absValue = Math.abs(value);
 
-  // For negative values, we'll show the absolute value in the chart but indicate it's negative in text
+ 
   const chartValue = isNegative ? absValue : value;
   const percentage = Math.min((absValue / max) * 100, 100);
 
-  // Determine colors based on whether value is negative
+  
   const gradientStart = isNegative
     ? "#ef4444"
     : colorInfo.gradientStart || "#00C49F";
@@ -113,4 +113,3 @@ const GaugeCard = ({
 
 export default GaugeCard;
 
-// for Gauge UI like speedometer

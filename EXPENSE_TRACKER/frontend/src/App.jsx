@@ -273,13 +273,12 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-// to get transaction from localstorage
 const getTransactionsFromStorage = () => {
   const saved = localStorage.getItem("transactions");
   return saved ? JSON.parse(saved) : [];
 };
 
-// to protect the routes
+
 const ProtectedRoute = ({ user, children }) => {
   const localToken = localStorage.getItem("token");
   const sessionToken = sessionStorage.getItem("token");
@@ -291,7 +290,6 @@ const ProtectedRoute = ({ user, children }) => {
   return children;
 };
 
-// to scroll to top when page gets reload or new page is visited
 const ScrollToTop = () => {
   const location = useLocation();
   useEffect(() => {
@@ -308,7 +306,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // to save the token
+ 
   const persistAuth = (userObj, tokenStr, remember = false) => {
     try {
       if (remember) {
@@ -342,7 +340,7 @@ const App = () => {
     setToken(null);
   };
 
-  // to update user data both in state and storage
+  
   const updateUserData = (updatedUser) => {
     setUser(updatedUser);
 
@@ -356,7 +354,7 @@ const App = () => {
     }
   };
 
-  // try to load user with token when mounted
+  
   useEffect(() => {
     (async () => {
       try {

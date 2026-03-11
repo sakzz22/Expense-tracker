@@ -40,5 +40,3 @@ const TimeFrameSelector = ({
 
 export default TimeFrameSelector;
 
-//it shows the 3 boxes with the details
-// like Total Income,Average Income, Transactions

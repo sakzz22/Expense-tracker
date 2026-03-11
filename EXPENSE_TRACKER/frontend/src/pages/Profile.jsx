@@ -9,7 +9,6 @@ import { toast, ToastContainer } from "react-toastify";
 const BASE_URL = "https://expense-tracker-2-81x3.onrender.com/api";
 
 Modal.setAppElement("#root");
-// Move PasswordInput component outside of ProfilePage to prevent recreation on every render
 const PasswordInput = memo(
   ({ name, label, value, error, showField, onToggle, onChange, disabled }) => (
     <div>
@@ -25,7 +24,7 @@ const PasswordInput = memo(
           }`}
           placeholder={`Enter ${label.toLowerCase()}`}
           disabled={disabled}
-          // Add key prop to help React identify the input
+          
           key={`password-input-${name}`}
         />
         <button
@@ -61,7 +60,7 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
   const [passwordData, setPasswordData] = useState({
     current: "",
     new: "",
-    confirm: "", //same as new password
+    confirm: "", 
   });
   const [showPassword, setShowPassword] = useState({
     current: false,
@@ -73,7 +72,6 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
 
   const getAuthToken = useCallback(() => localStorage.getItem("token"), []);
 
-  // API request
   const handleApiRequest = useCallback(
     async (method, endpoint, data = null) => {
       const token = getAuthToken();
@@ -108,7 +106,7 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
     [getAuthToken, navigate],
   );
 
-  // to fetch current user
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -126,7 +124,7 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
     fetchUserData();
   }, [handleApiRequest]);
 
-  // Input change handlers
+ 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setTempUser((prev) => ({ ...prev, [name]: value }));
@@ -135,17 +133,16 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
   const handlePasswordChange = useCallback((e) => {
     const { name, value } = e.target;
     setPasswordData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for this field when user starts typing
+    
     setPasswordErrors((prev) => ({ ...prev, [name]: "" }));
   }, []);
 
-  // Password visibility toggle
+
   const togglePasswordVisibility = useCallback((field) => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   }, []);
 
-  // save profile
-  // save profile
+  
   const handleSaveProfile = async () => {
     try {
       const data = await handleApiRequest("put", "/user/profile", tempUser);
@@ -167,7 +164,7 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
     setEditMode(false);
   }, [user]);
 
-  // Password validation
+ 
   const validatePassword = useCallback(() => {
     const errors = {};
     if (!passwordData.current) errors.current = "Current password is required";
@@ -183,7 +180,7 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
     return Object.keys(errors).length === 0;
   }, [passwordData]);
 
-  // to change password
+ 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     if (!validatePassword()) return;
@@ -199,7 +196,7 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
       setPasswordData({ current: "", new: "", confirm: "" });
       setPasswordErrors({});
 
-      // reset password visiblility
+    
       setShowPassword({ current: false, new: false, confirm: false });
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to change password");
@@ -361,14 +358,14 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
         </div>
       </div>
 
-      {/* Change Password Modal */}
+    
       <Modal
         isOpen={showPasswordModal}
         onRequestClose={closePasswordModal}
         contentLabel="Change Password"
         className="modal"
         overlayClassName="modal-overlay"
-        // Prevent unnecessary re-renders
+      
         shouldCloseOnOverlayClick={!loading}
         shouldCloseOnEsc={!loading}
       >

@@ -51,7 +51,7 @@ const Login = ({ onLogin, API_URL = "https://expense-tracker-2-81x3.onrender.com
       const data = res.data || {};
       const token = data.token || null;
 
-      // derive user profile
+  
       let profile = data.user ?? null;
 
       if (!profile) {

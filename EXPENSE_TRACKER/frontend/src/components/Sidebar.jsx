@@ -31,7 +31,6 @@ const Sidebar = ({ user, isCollapsed, setIsCollapsed }) => {
   const { name: username = "User", email = "user@example.com" } = user || {};
   const initial = username.charAt(0).toUpperCase();
 
-  // to check for overflow in mobile
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "auto";
     return () => {
@@ -128,7 +127,6 @@ const Sidebar = ({ user, isCollapsed, setIsCollapsed }) => {
         transition={{ type: "spring", damping: 25 }}
       >
         <div className={sidebarStyles.sidebarInner.base}>
-          {/* collapse toggle button */}
           <button
             onClick={toggleSidebar}
             className={sidebarStyles.toggleButton.base}
@@ -155,7 +153,7 @@ const Sidebar = ({ user, isCollapsed, setIsCollapsed }) => {
             </motion.div>
           </button>
 
-          {/* user profile */}
+          {/* user profile yaad rkahna h isko */}
           <div
             className={cn(
               sidebarStyles.userProfileContainer.base,
@@ -310,7 +308,6 @@ const Sidebar = ({ user, isCollapsed, setIsCollapsed }) => {
                 <div className={sidebarStyles.mobileFooter}>
                   <Link
                     onClick={() => setMobileOpen(false)}
-                    to="https://www.hexagondigitalservices.com/contact"
                     className={sidebarStyles.mobileFooterLink}
                   >
                     <HelpCircle size={20} className="text-gray-500" />

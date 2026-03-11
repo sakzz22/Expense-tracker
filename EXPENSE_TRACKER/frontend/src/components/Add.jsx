@@ -29,7 +29,7 @@ const AddTransactionModal = ({
 }) => {
   if (!showModal) return null;
 
-  // Get current date in YYYY-MM-DD format
+  // Get current date remeber this saksham
   const today = new Date();
   const currentYear = today.getFullYear();
   const currentDate = today.toISOString().split("T")[0];
