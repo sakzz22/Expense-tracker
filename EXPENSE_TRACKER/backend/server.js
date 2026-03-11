@@ -6,6 +6,7 @@ import userRouter from "./routes/userRoute.js";
 import incomeRouter from "./routes/incomeRoute.js";
 import expenseRouter from "./routes/expenseRoute.js";
 import dashboardRouter from "./routes/dashboardRoute.js";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,12 +15,14 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 //Middlewares
-app.use(cors({
-  origin: "https://expense-tracker-sakkzz.onrender.com",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "*",
+  }),
+);
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 //DB
